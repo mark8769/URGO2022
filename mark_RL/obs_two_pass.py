@@ -195,21 +195,28 @@ def get_servoing_stuff():
     cluster_list = add_clusters(filtered_points)
     
     visualize_points(filtered_points)
-    temp_max = 0
-    temp_dist_max = 0
-    dist_max = None
-    temp_cluster = None
-    dummy_cluster = None
+
+    temp_list = []    
+    # filter out clusters, dont want anything
+    # size of 1, dont want anything > 7 index length
     for cluster in cluster_list:
-        
-        temp_dist_max = cluster.get_center_distance()
+        cluster.print_cluster()
         temp_range = cluster.get_end_index() - cluster.get_start_index()
         
-        if temp_range >= temp_max and temp_range <= 7 and temp_range > 1 and dist_max < temp_dist_max:
+        if temp_range <= 12 and temp_range > 2:
             
-            temp_max = temp_range
+            temp_list.append(cluster)
+    
+    temp_cluster = temp_list[0]
+    
+    # we want to head to the closest object to us
+    temp_dist = temp_cluster.get_center_distance()
+    
+    for cluster in temp_list:
+        if cluster.get_center_distance() < temp_dist:
             temp_cluster = cluster
-
+            temp_dist = cluster.get_center_distance()
+        
     if temp_cluster is None:
         return None, None 
     else:

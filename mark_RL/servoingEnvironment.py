@@ -101,14 +101,19 @@ class ServoingEnvironment:
         print("RVR being reset")
         state = self.failState
         restartDriveCommand, restartLeftTrack, restartRightTrack = self.randomRestart()
-        asyncio.run(driver(*restartDriveCommand))
+        #asyncio.run(driver(*restartDriveCommand))
+        first_pass = False
         
         # The RVR will rotate until it sees a blob. (Search mode)
         while state == self.failState:
             # move first, then get_state
-            asyncio.run(driver(*[self.rvr, restartLeftTrack, restartRightTrack, .2, 180, "Scanning"]))
+            if first_pass:
+                # reverse instead
+                asyncio.run(driver(*[self.rvr, 1, 2, .65, 175, "Scanning"]))
+                asyncio.run(driver(*[self.rvr, restartLeftTrack, restartRightTrack, .2, 180, "Scanning"]))
             # I am assuming get my width and midpoint here, instead of blob
             state = self.get_state()
+            first_pass = True
 
         return state
     
