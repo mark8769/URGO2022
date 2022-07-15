@@ -110,7 +110,7 @@ class ServoingEnvironment:
             if first_pass:
                 # reverse instead
                 asyncio.run(driver(*[self.rvr, 1, 2, .65, 175, "Scanning"]))
-                asyncio.run(driver(*[self.rvr, restartLeftTrack, restartRightTrack, .2, 180, "Scanning"]))
+            asyncio.run(driver(*[self.rvr, restartLeftTrack, restartRightTrack, .2, 180, "Scanning"]))
             # I am assuming get my width and midpoint here, instead of blob
             state = self.get_state()
             first_pass = True
