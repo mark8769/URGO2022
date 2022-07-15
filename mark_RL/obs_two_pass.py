@@ -200,12 +200,16 @@ def get_servoing_stuff():
     # filter out clusters, dont want anything
     # size of 1, dont want anything > 7 index length
     for cluster in cluster_list:
-        cluster.print_cluster()
-        temp_range = cluster.get_end_index() - cluster.get_start_index()
+
+        temp_range = cluster.get_index_range()
         
-        if temp_range <= 12 and temp_range > 2:
-            
+        if temp_range >= 2 and temp_range <= 12:
+            cluster.print_cluster()
             temp_list.append(cluster)
+            
+    if len(temp_list) == 0:
+        print("Found nothing")
+        return None, None
     
     temp_cluster = temp_list[0]
     
