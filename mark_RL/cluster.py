@@ -35,6 +35,8 @@ class Cluster():
         return self.end
     def get_center_index(self):
         return self.center
+    def get_index_range(self):
+        return self.index_range
     def get_start_angle(self):
         return self.angle_one
     def get_center_angle(self):
